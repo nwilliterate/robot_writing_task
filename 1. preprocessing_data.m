@@ -55,7 +55,6 @@ sample_size = length(real_x);
 t = 1:sample_size;
 t = t*0.001;
 for i=1:7
-
     nexttile
     hold off
     plot(t, real_x(:,i),'-k');

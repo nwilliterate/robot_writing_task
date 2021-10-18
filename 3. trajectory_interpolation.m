@@ -53,9 +53,14 @@ for i=1:sample_size-1
     ref_ddx = [ref_ddx; temp_sdd];
 end
 
-T = table(ref_x);
-file_name = "3. trajectory_data\test1\trajectory.csv";
+T = table(ref_x(:,1:7));
+file_name = "3. trajectory_data\test1\trajectory_pose.csv";
 writetable(T, file_name, 'Delimiter',',')  
+
+T = table([ref_x(:,8) zeros(length(ref_x(:,8)),5)]);
+file_name = "3. trajectory_data\test1\trajectory_force.csv";
+writetable(T, file_name, 'Delimiter',',')  
+
 
 % plotting
 figure(1)
@@ -84,12 +89,11 @@ grid on;
 function [p, pd, pdd]= traj(q0, q1, t)
 tf = max(t(:));
 V = (q1-q0)/tf;
-p = zeros(length(t), 1);
-pd = p;
-pdd = p;
-for i = 1:length(t)
-    tt = t(i);
-    p(i) = (q1+q0-V*tf)/2 + V*tt;
+p = q0; %zeros(length(t), 1);
+pd = V;
+pdd = 0;
+for i = 2:length(t)
+    p(i) =  p(i-1)+V*0.001;
     pd(i) = V;
     pdd(i) = 0;
 end

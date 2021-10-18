@@ -24,7 +24,7 @@ for i =1:5
     real_force = table2array(readtable(folder_name+timeline{i}+"]franka_data_force_sensor.csv"));
 
     real_x = [real_x; real_car_quat];
-    real_f = [real_f; real_car_quat(:,1)];
+    real_f = [real_f; real_force(:,1)];
 end
 
 % normalize
@@ -64,7 +64,7 @@ for i=1:7
 end
 nexttile
 hold off
-plot(t, real_x(:,1),'-k');
+plot(t, real_f(:,1),'-k');
 hold on;
 plot(temp_t*0.001,(temp_x(:,8)),'ob','LineWidth',1,'MarkerSize', 5);
 
@@ -74,4 +74,4 @@ T = table(temp_x);
 
 round(sample_size/num, 0)
 file_name = "1. preprocessing_data\test1\train_data_"+ round(sample_size/num,0) + "_" + threshold+ ".csv";
-writetable(T,file_name,'Delimiter',',');
+writetable(T,file_name,'Delimiter',',')

@@ -55,18 +55,19 @@ sample_size = length(real_x);
 t = 1:sample_size;
 t = t*0.001;
 for i=1:7
-    nexttile
+    ax = nexttile;
     hold off
     plot(t, real_x(:,i),'-k');
     hold on;
     plot(temp_t*0.001,(temp_x(:,i)),'ob','LineWidth',1,'MarkerSize', 5);
+    xlim([0 sample_size*0.001]);
 end
 nexttile
 hold off
 plot(t, real_f(:,1),'-k');
 hold on;
 plot(temp_t*0.001,(temp_x(:,8)),'ob','LineWidth',1,'MarkerSize', 5);
-
+xlim([0 sample_size*0.001]);
 
 % Save data
 T = table(temp_x);

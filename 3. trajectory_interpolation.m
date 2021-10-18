@@ -53,13 +53,17 @@ for i=1:sample_size-1
     ref_ddx = [ref_ddx; temp_sdd];
 end
 
+% round
+for i=1:8
+    ref_x(:,i)= round(ref_x(:,i),6);
+end
 T = table(ref_x(:,1:7));
 file_name = "3. trajectory_data\test1\trajectory_pose.csv";
-writetable(T, file_name, 'Delimiter',',')  
+writetable(T, file_name, 'Delimiter',',','WriteVariableNames',0)  
 
 T = table([ref_x(:,8) zeros(length(ref_x(:,8)),5)]);
 file_name = "3. trajectory_data\test1\trajectory_force.csv";
-writetable(T, file_name, 'Delimiter',',')  
+writetable(T, file_name, 'Delimiter',',','WriteVariableNames',0)  
 
 
 % plotting
@@ -82,7 +86,7 @@ real_car_quat = table2array(readtable(folder_name+timeline{i}+"]franka_data_cart
 plot3((real_car_quat(:,1)), (real_car_quat(:,2)), (real_car_quat(:,3)),':k','LineWidth',1)
 hold on;
 end
-plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'--k','LineWidth',1.5')
+plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'-k','LineWidth',1.5')
 grid on;
 
 

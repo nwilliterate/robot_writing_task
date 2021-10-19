@@ -14,7 +14,7 @@ clc; clear;
 addpath(genpath('.'));
 
 % load data
-folder_name = "0.raw_data\test1\[20211018-";
+folder_name = "0. raw_data\test1\[20211018-";
 timeline = {"1332","1333","1334","1335","1336"};
 
 real_x = [];

@@ -4,7 +4,7 @@
 % Date:        Oct, 18, 2021
 %
 % -------------------------------------------------
-% Cartesian PD Controler
+% Hybrid Imdenance Controler
 % Franka Emika Robot
 % -------------------------------------------------
 %
@@ -13,9 +13,17 @@
 clc; clear;
 addpath(genpath('.'));
 
+task_index = 2;
+if (task_index == 1)
+    task_folder = "task1";
+elseif (task_index == 2)
+    task_folder = "task2";
+end
+
+
 % reference joint catersian
-ref_x = table2array(readtable("3. trajectory_data\test1\trajectory_pose.csv"));
-ref_f = table2array(readtable("3. trajectory_data\test1\trajectory_force.csv"));
+ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose.csv"));
+ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force.csv"));
 
 % simulation setting
 sample_size = length(ref_x);
@@ -38,8 +46,8 @@ traj_f = ref_f;
 
 % Impedance Gain
 Md = diag([1 1 1 1 1 1]'); 
-Kd = diag([250 250 250 200 200 200]');
-Bd = sqrt(Kd)*2;
+Kd = 0.3*diag([250 250 250 200 200 200]');
+Bd = sqrt(Kd)*1;
 
 % ext_force
 f_ext = zeros(sample_size, 6);
@@ -79,6 +87,11 @@ for i=1:sample_size
     % input
     % position
     % u = M*pinv(J)*(ref_xdd(i,:)+inv(Md)*Bd*(e_dot)+inv(Md)*Kd*e+inv(Md)*f_ext(i,:)'-J_dot*qd)-J'*f_ext(i,:)';   % use simple_rk and simple_plant
+    
+%     if (car_pos(i,1) > 0.413)
+%        f_ext(i,1) = 1*(0.413-car_pos(i,1));
+%     end
+    
     % force/position
     u = M*pinv(J)*(inv(Md)*Bd*(e_dot)+inv(Md)*Kd*e+inv(Md)*f_ext(i,:)'-inv(Md)*traj_f(i,:)'-J_dot*qd)-J'*f_ext(i,:)';   % use simple_rk and simple_plant
     % u = M*pinv(J)*(ref_xdd(i,:)+inv(Md)*Bd*(e_dot)+inv(Md)*Kd*e-inv(Md)*f_ext(i,:)'-J_dot*qd)-J'*f_ext(i,:)';    % use rk and plant
@@ -130,7 +143,7 @@ for i=4:6
     ylabel("x_{"+i+ "}(t)", 'FontSize', 10);
     legend('x_d','x')
 end
-saveas(gcf,'result1.eps','epsc');
+% saveas(gcf,'result1.eps','epsc');
 
 % 3D Cartesian Pose Plot
 fig=figure(2);
@@ -145,19 +158,27 @@ plot3(traj_x(1,1), traj_x(1,2),traj_x(1,3),'or','LineWidth',1.5')
 plot3(traj_x(sample_size,1), traj_x(sample_size,2),traj_x(sample_size,3),'ob','LineWidth',1.5')
 plot3(car_pos(:,1), car_pos(:,2),car_pos(:,3),'-r','LineWidth',1.5')
 legend('ref x','start point', 'end point', 'cur x')
-axis([-0. 1 -0.5 0.5 0.1 1]);
+ax = gca;
+r = 0.05;
+axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
+% axis([-0. 1 -0.5 0.5 0.1 1]);
+% axis([-0. 1 -0.5 0.5 0.1 1]);
+
 xlabel('x_{1}', 'FontSize', 12)
 ylabel("x_{2}", 'FontSize', 12);
 zlabel('x_{3}', 'FontSize', 12)
 grid on;
 
-saveas(gcf,'result2.eps','epsc');
+% saveas(gcf,'result2.eps','epsc');
 %
 % force ext
 figure(3)
 set(gcf,'color','w');
 for i=1:1
     subplot(6,1,i)
+    hold off;
     plot(t, traj_f(:,i),'-k','LineWidth',1.5')
+    hold on;
+    plot(t, f_ext(:,i),'-b','LineWidth',1.5')
     grid on
 end

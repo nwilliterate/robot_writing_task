@@ -16,10 +16,12 @@ addpath(genpath('.'));
 task_index = 2;
 
 if (task_index == 1)
-    folder_name = "0. raw_data\test1\[20211018-";
+    task_folder = "task1";
+    folder_name = "0. raw_data\task1\[20211018-";
     timeline = {"1332","1333","1334","1335","1336"};
 elseif (task_index == 2)
-    folder_name = "0. raw_data\test2\[20211022-";
+    task_folder = "task2";
+    folder_name = "0. raw_data\task2\[20211022-";
     timeline = {"1404","1405","1407","1409","1410"};
 end
 
@@ -79,10 +81,5 @@ xlim([0 sample_size*0.001]);
 T = table(temp_x);
 
 round(sample_size/num, 0)
-
-if (task_index == 1)
-    file_name = "1. preprocessing_data\test1\train_data_"+ round(sample_size/num,0) + "_" + threshold+ ".csv";
-elseif (task_index == 2)
-    file_name = "1. preprocessing_data\test2\train_data_"+ round(sample_size/num,0) + "_" + threshold+ ".csv";
-end
+file_name = "1. preprocessing_data\"+task_folder+"\train_data_"+ round(sample_size/num,0) + "_" + threshold+ ".csv";
 writetable(T,file_name,'Delimiter',',')

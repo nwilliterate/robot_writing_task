@@ -16,10 +16,10 @@ addpath(genpath('.'));
 task_index = 2;
 
 if (task_index == 1)
-    folder_name = "0. raw_data\test1\[20211018-";
+    folder_name = "0. raw_data\task1\[20211018-";
     timeline = {"1332","1333","1334","1335","1336"};
 elseif (task_index == 2)
-    folder_name = "0. raw_data\test2\[20211022-";
+    folder_name = "0. raw_data\task2\[20211022-";
     timeline = {"1404","1405","1407","1409","1410"};
 end
 

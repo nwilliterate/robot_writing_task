@@ -99,6 +99,26 @@ end
 plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'.k','LineWidth',1.5')
 plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'.r','LineWidth',1.5')
 grid on;
+ax = gca;
+r = 0.05;
+axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
+
+figure(3)
+set(gcf,'color','w');
+hold off;
+idx = abs(ref_x(:,8)) > 2;
+for i =1:5
+real_car_quat = table2array(readtable(folder_name+timeline{i}+"]franka_data_cartesian_quat.csv"));
+plot3((real_car_quat(:,1)), (real_car_quat(:,2)), (real_car_quat(:,3)),':k','LineWidth',1)
+hold on;
+end
+plot3(ref_x(idx,1), ref_x(idx,2),ref_x(idx,3),'.k','LineWidth',1.5')
+% plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'.r','LineWidth',1.5')
+grid on;
+ax = gca;
+r = 0.05;
+axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
+
 
 
 function [p, pd, pdd]= traj(q0, q1, t)

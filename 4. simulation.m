@@ -1,7 +1,8 @@
 % Copyright (C) 2021 All rights reserved.
 %
-% Authors:     Seonghyeon Jo <seonghyeonjo@etri.re.kr>
-% Date:        Oct, 18, 2021
+% Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+% Date:         Oct, 18, 2021
+% Last Updated: Des, 13, 2021
 %
 % -------------------------------------------------
 % Hybrid Imdenance Controler
@@ -13,17 +14,20 @@
 clc; clear;
 addpath(genpath('.'));
 
-task_index = 2;
+task_index = 3;
 if (task_index == 1)
     task_folder = "task1";
 elseif (task_index == 2)
     task_folder = "task2";
+elseif (task_index == 3)
+    task_folder = "task3";
 end
-
 
 % reference joint catersian
 ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose.csv"));
 ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force.csv"));
+ref_x = ref_x(1:22000, :);
+ref_f = ref_f(1:22000, :);
 
 % simulation setting
 sample_size = length(ref_x);
@@ -46,7 +50,7 @@ traj_f = ref_f;
 
 % Impedance Gain
 Md = diag([1 1 1 1 1 1]'); 
-Kd = 0.3*diag([250 250 250 200 200 200]');
+Kd = 0.3*diag([250 250 250 200 200 200]')*10;
 Bd = sqrt(Kd)*1;
 
 % ext_force
@@ -63,10 +67,12 @@ for i=1:sample_size
     % Franka Kinematics
     % joint space -> task space(euler)
     [p, R]=get_pose(q);
+    
     z1 = atan2(R(2,3),R(1,3));
     y = atan2(sqrt(R(1,3)^2 + R(2,3)^2), R(3,3));
     z2 = atan2(R(3,2), - R(3,1)); 
     eul = [z2 y z1]';
+    quat(i,:) = rotm2quat(R);
     car_pos(i,:) = [p; eul];
     
     % Model
@@ -89,7 +95,7 @@ for i=1:sample_size
     % u = M*pinv(J)*(ref_xdd(i,:)+inv(Md)*Bd*(e_dot)+inv(Md)*Kd*e+inv(Md)*f_ext(i,:)'-J_dot*qd)-J'*f_ext(i,:)';   % use simple_rk and simple_plant
     
 %     if (car_pos(i,1) > 0.413)
-%        f_ext(i,1) = 1*(0.413-car_pos(i,1));
+%        f_ext(i,1) = 120*(0.413-car_pos(i,1));
 %     end
     
     % force/position
@@ -107,12 +113,11 @@ for i=1:sample_size
     end
 end
 
-
 % Plotting
 % Comparison with the desired Cartesian
 fig = figure(1);
 % fig.Position = [0 0 780 1000]; 
-tiledlayout(6,1,'TileSpacing','Compact','Padding','Compact');
+tiledlayout(3,3,'TileSpacing','Compact','Padding','Compact');
 set(gcf,'color','w');
 for i=1:3
     ax = nexttile;
@@ -120,30 +125,43 @@ for i=1:3
     plot(t, traj_x(:,i),'-k','LineWidth',1.5')
     hold on;
     plot(t, car_pos(:,i),'-r','LineWidth',1.5')
-    grid on;
-    ylim([ax.YLim(1)-0.025  ax.YLim(2)+0.025])
+%     ylim([ax.YLim(1)-0.025  ax.YLim(2)+0.025])
     xlim([0 sim_time])
-    xticks([0:1:sim_time]);
-    xlabel('Time (sec)', 'FontSize', 10)
-    ylabel("x_{"+i+ "}(t)", 'FontSize', 10);
     grid on;
-    legend('x_d','x')
+%     xticks([0:1:sim_time]);
+    xlabel('Time (sec)', 'FontSize', 10)
+    ylabel("x_{"+i+ "}(m)", 'FontSize', 10);
+    grid on;
+%     legend('x_d','x')
 end
-for i=4:6
+for i=4:7
     ax = nexttile;
     hold off
-    plot(t, traj_x(:,i),'-k','LineWidth',1.5')
+    if(i==4)
+        plot(t, -ref_x(:,7),'-k','LineWidth',1.5')
+    else
+        plot(t, -ref_x(:,i-1),'-k','LineWidth',1.5')
+    end
     hold on;
-    plot(t, car_pos(:,i),'-r','LineWidth',1.5')
-    grid on;
-    ylim([ax.YLim(1)-0.25  ax.YLim(2)+0.25])
+    plot(t, quat(:,i-3),'-r','LineWidth',1.5')
+%     ylim([ax.YLim(1)-0.25  ax.YLim(2)+0.25])
     xlim([0 sim_time])
-    xticks([0:1:sim_time]);
+    grid on;
+%     xticks([0:1:sim_time]);
     xlabel('Time (sec)', 'FontSize', 10)
-    ylabel("x_{"+i+ "}(t)", 'FontSize', 10);
-    legend('x_d','x')
+    ylabel("x_{"+i+ "}(rad)", 'FontSize', 10);
+%     legend('x_d','x')
 end
-% saveas(gcf,'result1.eps','epsc');
+ax = nexttile;
+hold off;
+plot(t, traj_f(:,1),'-k','LineWidth',1.5')
+hold on;
+plot(t, f_ext(:,1),'-r','LineWidth',1.5')
+grid on
+xlabel('Time (sec)', 'FontSize', 10)
+ylabel("x_{"+8+ "}(N)", 'FontSize', 10);
+xlim([0 sim_time])
+saveas(gcf,'fig\simulaton_result1.eps','epsc');
 
 % 3D Cartesian Pose Plot
 fig=figure(2);
@@ -154,12 +172,12 @@ nexttile
 hold off
 plot3(traj_x(:,1), traj_x(:,2),traj_x(:,3),'-k','LineWidth',1.5')
 hold on
-plot3(traj_x(1,1), traj_x(1,2),traj_x(1,3),'or','LineWidth',1.5')
-plot3(traj_x(sample_size,1), traj_x(sample_size,2),traj_x(sample_size,3),'ob','LineWidth',1.5')
+% plot3(traj_x(1,1), traj_x(1,2),traj_x(1,3),'or','LineWidth',1.5')
+% plot3(traj_x(sample_size,1), traj_x(sample_size,2),traj_x(sample_size,3),'ob','LineWidth',1.5')
 plot3(car_pos(:,1), car_pos(:,2),car_pos(:,3),'-r','LineWidth',1.5')
-legend('ref x','start point', 'end point', 'cur x')
+% legend('ref x','start point', 'end point', 'cur x')
 ax = gca;
-r = 0.05;
+r = 0.075;
 axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
 % axis([-0. 1 -0.5 0.5 0.1 1]);
 % axis([-0. 1 -0.5 0.5 0.1 1]);
@@ -169,16 +187,4 @@ ylabel("x_{2}", 'FontSize', 12);
 zlabel('x_{3}', 'FontSize', 12)
 grid on;
 
-% saveas(gcf,'result2.eps','epsc');
-%
-% force ext
-figure(3)
-set(gcf,'color','w');
-for i=1:1
-    subplot(6,1,i)
-    hold off;
-    plot(t, traj_f(:,i),'-k','LineWidth',1.5')
-    hold on;
-    plot(t, f_ext(:,i),'-b','LineWidth',1.5')
-    grid on
-end
+saveas(gcf,'fig\simulaton_result2.eps','epsc');

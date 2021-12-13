@@ -1,10 +1,12 @@
 % Copyright (C) 2021 All rights reserved.
 %
-% Authors:     Seonghyeon Jo <seonghyeonjo@etri.re.kr>
-% Date:        Oct, 18, 2021
+% Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+% Date:         Oct, 18, 2021
+% Last Updated: Des, 13, 2021
 %
 % -------------------------------------------------
-% Trajectory interpolation
+% Trajectory Interpolation
+%
 % -------------------------------------------------
 %
 % the following code has been tested on Matlab 2021a
@@ -12,7 +14,7 @@
 clc; clear;
 addpath(genpath('.'));
 
-task_index = 2; 
+task_index = 3; 
 if (task_index == 1)
     task_folder = "task1";
     folder_name = "0. raw_data\task1\[20211018-";
@@ -21,10 +23,14 @@ elseif (task_index == 2)
     task_folder = "task2";
     folder_name = "0. raw_data\task2\[20211022-";
     timeline = {"1404","1405","1407","1409","1410"};
+elseif (task_index == 3)
+    task_folder = "task3";
+    folder_name = "0. raw_data\task3\[20211213-";
+    timeline = {"185443","185530","185622","185709","185754"};
 end
 
 sim_period = 0.001;
-sample_time = 0.064;
+sample_time = 0.054;
 
 real_x = [];
 real_f = [];
@@ -75,16 +81,22 @@ T = table([ref_x(:,8) zeros(length(ref_x(:,8)),5)]);
 file_name = "3. trajectory_data\"+task_folder+"\trajectory_force.csv";
 writetable(T, file_name, 'Delimiter',',','WriteVariableNames',0)  
 
-
-% plotting
+% Plotting
 figure(1)
 set(gcf,'color','w');
-tiledlayout(8,1,'TileSpacing','Compact','Padding','Compact');
+tiledlayout(3, 3,'TileSpacing','Compact','Padding','Compact');
 plotline = {'-m','-r','-g','-b','-k'};
+t = (1:length(ref_x))*0.001;
 for i=1:8
-nexttile
-plot(ref_x(:,i),'-b','LineWidth',1.5')
-grid on;
+    ax = nexttile;
+    hold off
+    plot(t, ref_x(:,i),'-k','LineWidth',1.5','MarkerSize', 1.3)
+    hold on;
+    xlim([0 length(t)*0.001])
+    ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
+    grid on;
+    ylabel("x_"+num2str(i)+"");
+    xlabel('time(s)');
 end
 
 
@@ -100,8 +112,12 @@ plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'.k','LineWidth',1.5')
 plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'.r','LineWidth',1.5')
 grid on;
 ax = gca;
-r = 0.05;
+r = 0.075;
 axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
+xlabel('x_1(m)');
+ylabel('x_2(m)');
+zlabel('x_3(m)');
+
 
 figure(3)
 set(gcf,'color','w');
@@ -116,8 +132,11 @@ plot3(ref_x(idx,1), ref_x(idx,2),ref_x(idx,3),'.k','LineWidth',1.5')
 % plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'.r','LineWidth',1.5')
 grid on;
 ax = gca;
-r = 0.05;
+r = 0.075;
 axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2)+r])
+xlabel('x_1(m)');
+ylabel('x_2(m)');
+zlabel('x_3(m)');
 
 
 

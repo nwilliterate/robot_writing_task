@@ -1,10 +1,11 @@
 % Copyright (C) 2021 All rights reserved.
 %
-% Authors:     Seonghyeon Jo <seonghyeonjo@etri.re.kr>
-% Date:        Oct, 18, 2021
+% Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+% Date:         Oct, 18, 2021
+% Last Updated: Des, 13, 2021
 %
 % -------------------------------------------------
-% Raw data plotting
+% Kinesthetic Teaching Data Plot.
 %
 % -------------------------------------------------
 %
@@ -13,7 +14,7 @@
 clc; clear;
 addpath(genpath('.'));
 
-task_index = 2;
+task_index = 3;
 
 if (task_index == 1)
     folder_name = "0. raw_data\task1\[20211018-";
@@ -21,7 +22,12 @@ if (task_index == 1)
 elseif (task_index == 2)
     folder_name = "0. raw_data\task2\[20211022-";
     timeline = {"1404","1405","1407","1409","1410"};
+elseif (task_index == 3)
+    task_folder = "task3";
+    folder_name = "0. raw_data\task3\[20211213-";
+    timeline = {"185443","185530","185622","185709","185754"};
 end
+
 
 plotline = {'-m','-r','-g','-b','-k'};
 
@@ -35,14 +41,40 @@ for i =1:5
     hold on;
     grid on;
 end
+xlabel('x_1(m)');
+ylabel('x_2(m)');
+zlabel('x_3(m)');
+saveas(gcf,'fig\teaching_result1.eps','epsc');
 
 figure(2)
 set(gcf,'color','w');
-tiledlayout(1,1,'TileSpacing','Compact','Padding','Compact');
-hold off;
+tiledlayout(3,3,'TileSpacing','Compact','Padding','Compact');
+for j =1:7
+    nexttile
+    hold off;
+    for i =1:5
+        real_car_quat = table2array(readtable(folder_name+timeline{i}+"]franka_data_cartesian_quat.csv"));
+        t = 0.001:0.001:length(real_car_quat)*0.001;
+        plot(t, real_car_quat(:,j),plotline{i},'LineWidth',1.5)
+        hold on;
+        grid on;
+    end
+    if j < 4
+        ylabel("x_"+num2str(j)+"(m)");
+    else
+        ylabel("x_"+num2str(j)+"(rad)");
+    end
+    xlabel('time(s)');
+end
+nexttile
 for i =1:5
     real_force = table2array(readtable(folder_name+timeline{i}+"]franka_data_force_sensor.csv"));
-    plot(real_force(:,1),plotline{i},'LineWidth',1.5)
+    t = 0.001:0.001:length(real_force)*0.001;
+    plot(t, real_force(:,1),plotline{i},'LineWidth',1.5)
     hold on;
     grid on;
+    ylabel("x_"+num2str(j)+"(N)");
+    xlabel('time(s)');
 end
+
+saveas(gcf,'fig\teaching_result2.eps','epsc');

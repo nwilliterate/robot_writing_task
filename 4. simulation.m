@@ -113,12 +113,14 @@ for i=1:sample_size
     end
 end
 
-% Plotting
+%% Plotting
 % Comparison with the desired Cartesian
 fig = figure(1);
 % fig.Position = [0 0 780 1000]; 
 tiledlayout(3,3,'TileSpacing','Compact','Padding','Compact');
 set(gcf,'color','w');
+
+ylabel_name = {"P_x(m)", "P_y(m)", "P_z(m)", "R_x", "R_y", "R_z", "R_w", "F_x(N)"};
 for i=1:3
     ax = nexttile;
     hold off
@@ -130,26 +132,37 @@ for i=1:3
     grid on;
 %     xticks([0:1:sim_time]);
     xlabel('Time (sec)', 'FontSize', 10)
-    ylabel("x_{"+i+ "}(m)", 'FontSize', 10);
+    ylabel(ylabel_name{i}, 'FontSize', 10);
     grid on;
+    ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
 %     legend('x_d','x')
 end
+
 for i=4:7
     ax = nexttile;
     hold off
-    if(i==4)
-        plot(t, -ref_x(:,7),'-k','LineWidth',1.5')
-    else
-        plot(t, -ref_x(:,i-1),'-k','LineWidth',1.5')
-    end
+    plot(t, ref_x(:,i),'-k','LineWidth',1.5')
+%     if(i==4)
+%         plot(t, ref_x(:,7),'-k','LineWidth',1.5')
+%     else
+%         plot(t, ref_x(:,i-1),'-k','LineWidth',1.5')
+%     end
     hold on;
-    plot(t, quat(:,i-3),'-r','LineWidth',1.5')
+    
+    
+    if(i==7)
+        plot(t, -quat(:,1),'-r','LineWidth',1.5')
+    else
+        plot(t, -quat(:,i-2),'-r','LineWidth',1.5')
+    end
+%     plot(t, quat(:,i-3),'-r','LineWidth',1.5')
 %     ylim([ax.YLim(1)-0.25  ax.YLim(2)+0.25])
     xlim([0 sim_time])
     grid on;
 %     xticks([0:1:sim_time]);
+    ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
     xlabel('Time (sec)', 'FontSize', 10)
-    ylabel("x_{"+i+ "}(rad)", 'FontSize', 10);
+    ylabel(ylabel_name{i}, 'FontSize', 10);
 %     legend('x_d','x')
 end
 ax = nexttile;
@@ -159,7 +172,8 @@ hold on;
 plot(t, f_ext(:,1),'-r','LineWidth',1.5')
 grid on
 xlabel('Time (sec)', 'FontSize', 10)
-ylabel("x_{"+8+ "}(N)", 'FontSize', 10);
+ylabel(ylabel_name{8}, 'FontSize', 10);
+ylim([ax.YLim(1)-2 ax.YLim(2)+2])
 xlim([0 sim_time])
 saveas(gcf,'fig\simulaton_result1.eps','epsc');
 
@@ -182,9 +196,9 @@ axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2
 % axis([-0. 1 -0.5 0.5 0.1 1]);
 % axis([-0. 1 -0.5 0.5 0.1 1]);
 
-xlabel('x_{1}', 'FontSize', 12)
-ylabel("x_{2}", 'FontSize', 12);
-zlabel('x_{3}', 'FontSize', 12)
+xlabel('P_x(m)','FontSize', 12);
+ylabel('P_y(m)','FontSize', 12);
+zlabel('P_z(m)','FontSize', 12);
 grid on;
 
 saveas(gcf,'fig\simulaton_result2.eps','epsc');

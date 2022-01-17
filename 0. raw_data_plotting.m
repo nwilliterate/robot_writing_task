@@ -41,14 +41,15 @@ for i =1:5
     hold on;
     grid on;
 end
-xlabel('x_1(m)');
-ylabel('x_2(m)');
-zlabel('x_3(m)');
+xlabel('P_x(m)');
+ylabel('P_y(m)');
+zlabel('P_z(m)');
 saveas(gcf,'fig\teaching_result1.eps','epsc');
 
 figure(2)
 set(gcf,'color','w');
 tiledlayout(3,3,'TileSpacing','Compact','Padding','Compact');
+ylabel_name = {"P_x(m)", "P_y(m)", "P_z(m)", "R_x", "R_y", "R_z", "R_w", "F_x(N)"};
 for j =1:7
     nexttile
     hold off;
@@ -59,11 +60,12 @@ for j =1:7
         hold on;
         grid on;
     end
-    if j < 4
-        ylabel("x_"+num2str(j)+"(m)");
-    else
-        ylabel("x_"+num2str(j)+"(rad)");
-    end
+    ylabel(ylabel_name{j});
+%     if j < 4
+%         ylabel("x_"+num2str(j)+"(m)");
+%     else
+%         ylabel("x_"+num2str(j)+"(rad)");
+%     end
     xlabel('time(s)');
 end
 nexttile
@@ -73,7 +75,7 @@ for i =1:5
     plot(t, real_force(:,1),plotline{i},'LineWidth',1.5)
     hold on;
     grid on;
-    ylabel("x_"+num2str(j)+"(N)");
+    ylabel(ylabel_name{8});
     xlabel('time(s)');
 end
 

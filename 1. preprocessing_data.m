@@ -51,7 +51,7 @@ sample_size = length(x);
 temp_t = [1];
 temp_x = round(x(1,:),3);
 num = 1;
-threshold = 0.05;
+threshold = 0.075;
 for i=1:sample_size
     if(norm(temp_x(num,1:8) - x(i,1:8)) > threshold) 
         num = num + 1;

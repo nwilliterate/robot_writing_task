@@ -41,6 +41,8 @@ tiledlayout(3,3,'TileSpacing','Compact','Padding','Compact');
 set(gcf,'color','w');
 t = (1:length(test1_x))*0.001;
 t2 = (1:length(ref_x))*0.001;
+
+ylabel_name = {"P_x(m)", "P_y(m)", "P_z(m)", "R_x", "R_y", "R_z", "R_w", "F_x(N)"};
 for i=1:7
     ax = nexttile;
     hold off
@@ -51,7 +53,7 @@ for i=1:7
     xlim([0 length(t)*0.001])
     ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
     grid on;
-    ylabel("x_"+num2str(i)+"");
+    ylabel(ylabel_name{i}, 'FontSize', 10);
     xlabel('time(s)');
 end
 ax = nexttile;
@@ -62,7 +64,7 @@ plot(t2, ref_f(:,1),'-r','LineWidth',1.5')
 grid on;
 xlim([0 length(t)*0.001])
 ylim([ax.YLim(1)-2 ax.YLim(2)+2])
-ylabel("x_"+num2str(8)+"");
+ylabel(ylabel_name{8}, 'FontSize', 10);
 xlabel('time(s)');
 saveas(gcf,'fig\experiment_result1.eps','epsc');
 
@@ -72,16 +74,16 @@ set(gcf,'color','w');
 tiledlayout(1,1,'TileSpacing','Compact','Padding','Compact');
 nexttile
 hold off
-plot3(test1_x(:,1), test1_x(:,2),test1_x(:,3),'-k','LineWidth',1.5')
-hold on;
+    plot3(test1_x(:,1), test1_x(:,2),test1_x(:,3),'-k','LineWidth',1.5')
+    hold on;
 % plot3(test2_x(:,1), test2_x(:,2),test2_x(:,3),'-r','LineWidth',1.5')
 plot3(ref_x(1:length(test1_x),1), ref_x(1:length(test1_x),2),ref_x(1:length(test1_x),3),'-r','LineWidth',1.5')
 ax=gca;
 scale = 0.075;
 axis([ax.XLim(1)-scale ax.XLim(2)+scale ax.YLim(1)-scale ax.YLim(2)+scale ax.ZLim(1)-scale ax.ZLim(2)+scale]);
 grid on;
-xlabel('x_1(m)');
-ylabel('x_2(m)');
-zlabel('x_3(m)');
+xlabel('P_x(m)','FontSize', 12);
+ylabel('P_y(m)','FontSize', 12);
+zlabel('P_z(m)','FontSize', 12);
 
 saveas(gcf,'fig\experiment_result2.eps','epsc');

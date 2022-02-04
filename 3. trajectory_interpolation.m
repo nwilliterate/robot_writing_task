@@ -1,8 +1,8 @@
 % Copyright (C) 2021 All rights reserved.
-%
 % Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+%
 % Date:         Oct, 18, 2021
-% Last Updated: Des, 13, 2021
+% Last Updated: Feb, 04, 2021
 %
 % -------------------------------------------------
 % Trajectory Interpolation
@@ -13,6 +13,15 @@
 %%
 clc; clear;
 addpath(genpath('.'));
+
+fig_index = 2;
+if (fig_index == 1)
+    fig_type = ".eps";
+elseif (fig_index == 2)
+    fig_type = ".png";
+elseif (fig_index == 3)
+    fig_type = ".jpg";
+end
 
 task_index = 3; 
 if (task_index == 1)
@@ -98,7 +107,11 @@ for i=1:8
     ylabel("x_"+num2str(i)+"");
     xlabel('time(s)');
 end
-
+if (fig_index == 1)
+    saveas(gcf,"fig\traj_inter_result1" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\traj_inter_result1" + fig_type);
+end
 
 figure(2)
 set(gcf,'color','w');
@@ -117,6 +130,11 @@ axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2
 xlabel('x_1(m)');
 ylabel('x_2(m)');
 zlabel('x_3(m)');
+if (fig_index == 1)
+    saveas(gcf,"fig\traj_inter_result2" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\traj_inter_result2" + fig_type);
+end
 
 
 figure(3)
@@ -137,7 +155,11 @@ axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2
 xlabel('x_1(m)');
 ylabel('x_2(m)');
 zlabel('x_3(m)');
-
+if (fig_index == 1)
+    saveas(gcf,"fig\traj_inter_result3" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\traj_inter_result3" + fig_type);
+end
 
 
 function [p, pd, pdd]= traj(q0, q1, t)

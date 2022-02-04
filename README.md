@@ -1,8 +1,13 @@
 # robot manipulator writing task
 
 > Authors:	Seonghyeon Jo(cpsc.seonghyeon@gmail.com)
+> 
 > Date:		 Jan, 1, 2022
 >
+
+
+With the recent advances in robotics, robots are needed not only in the manufacturing field but also in various service fields. In order to realize a robot in the service fields, it is necessary to perform complex tasks and various work environments. Therefore traditional robots must be capable of easily performing physical interaction tasks. In this respect, learning from demonstration (LfD), a method in which robots acquire mimic skills by learning to imitate an expert, is an alternative way. LfD method learns the dynamics of the trajectory by optimizing it with a mathematical linear model. However, complex or overlapping patterns are difficult to learn and require the use of mixed models when learning position and force. In this paper we approach the problem of learning time-series data by predicting the output for the next state with the input for the current and previous states. Also, in terms of work, it is important to utilize the information of position/force so that the robot can perform its role well. In LfD, the imitation performance varies depending on the position/force controller. In this paper, we implicitly learn the policy for the task condition from the expert's demonstration and perform position/force-based hybrid impedance control that is not restricted from motion in the trajectory derived from the policy. In addition, it uses a position/force-based hybrid impedance controller to simultaneously learn position and force through kinematic teaching from experts to perform free movement. The proposed LfD method was experimentally verified by applying a writing task to a 7-DoF manipulator. The proposed method can be applied quickly and easily to position/force-based tasks without constraints.
+
 
 ### video 
 https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1

@@ -7,8 +7,9 @@
 ### video 
 https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1
 
-![Hnet com-image](https://user-images.githubusercontent.com/46432171/152459409-8c67f594-ebad-47be-8f53-1b9a12925c89.gif)
+![Hnet com-image](https://user-images.githubusercontent.com/46432171/152459719-ac93ed3d-8249-4858-ba72-df84a7166081.gif)
 
+![Hnet com-image (1)](https://user-images.githubusercontent.com/46432171/152459741-0f8b139c-3758-4f62-aaa2-2572e800af53.gif)
 
 ### 0. Raw data 
 <img src="/fig/teaching_result2.png" alt="1"  width="375" /> 

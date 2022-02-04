@@ -7,7 +7,6 @@
 <iframe style="width:100%; height:300px;" src="https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### 0. Raw data 
-
 <img src="/fig/teaching_result2.png" alt="1"  width="375" /> 
 <img src="/fig/teaching_result1.png" alt="1"  width="375" /> 
 

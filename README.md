@@ -18,6 +18,9 @@
 
 ### 2. learning from demonstartion using LSTM network 
 
+<img src="/fig/learning_result3.png" alt="1"  width="375" /> 
+<img src="/fig/learning_result4.png" alt="1"  width="375" /> 
+
 ### 3. trajectory interpolation
 
 ### 4. simulation result 

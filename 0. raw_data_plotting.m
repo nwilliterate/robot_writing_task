@@ -13,7 +13,9 @@
 %%
 clc; clear;
 addpath(genpath('.'));
-task_index = 3; fig_index = 2;
+
+fig_index = 2;
+task_index = 3; 
 
 if (fig_index == 1)
     fig_type = ".eps";

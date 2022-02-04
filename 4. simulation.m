@@ -1,8 +1,8 @@
 % Copyright (C) 2021 All rights reserved.
-%
 % Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+%
 % Date:         Oct, 18, 2021
-% Last Updated: Des, 13, 2021
+% Last Updated: Feb, 04, 2022
 %
 % -------------------------------------------------
 % Hybrid Imdenance Controler
@@ -13,6 +13,15 @@
 %%
 clc; clear;
 addpath(genpath('.'));
+
+fig_index = 2;
+if (fig_index == 1)
+    fig_type = ".eps";
+elseif (fig_index == 2)
+    fig_type = ".png";
+elseif (fig_index == 3)
+    fig_type = ".jpg";
+end
 
 task_index = 3;
 if (task_index == 1)
@@ -26,8 +35,8 @@ end
 % reference joint catersian
 ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose.csv"));
 ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force.csv"));
-ref_x = ref_x(1:22000, :);
-ref_f = ref_f(1:22000, :);
+% ref_x = ref_x(1:19000, :);
+% ref_f = ref_f(1:19000, :);
 
 % simulation setting
 sample_size = length(ref_x);
@@ -113,7 +122,7 @@ for i=1:sample_size
     end
 end
 
-%% Plotting
+% Plotting
 % Comparison with the desired Cartesian
 fig = figure(1);
 % fig.Position = [0 0 780 1000]; 
@@ -127,43 +136,29 @@ for i=1:3
     plot(t, traj_x(:,i),'-k','LineWidth',1.5')
     hold on;
     plot(t, car_pos(:,i),'-r','LineWidth',1.5')
-%     ylim([ax.YLim(1)-0.025  ax.YLim(2)+0.025])
+    ylim([ax.YLim(1)-0.025  ax.YLim(2)+0.025])
     xlim([0 sim_time])
-    grid on;
-%     xticks([0:1:sim_time]);
     xlabel('Time (sec)', 'FontSize', 10)
     ylabel(ylabel_name{i}, 'FontSize', 10);
     grid on;
     ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
-%     legend('x_d','x')
 end
 
 for i=4:7
     ax = nexttile;
     hold off
     plot(t, ref_x(:,i),'-k','LineWidth',1.5')
-%     if(i==4)
-%         plot(t, ref_x(:,7),'-k','LineWidth',1.5')
-%     else
-%         plot(t, ref_x(:,i-1),'-k','LineWidth',1.5')
-%     end
     hold on;
-    
-    
     if(i==7)
         plot(t, -quat(:,1),'-r','LineWidth',1.5')
     else
         plot(t, -quat(:,i-2),'-r','LineWidth',1.5')
     end
-%     plot(t, quat(:,i-3),'-r','LineWidth',1.5')
-%     ylim([ax.YLim(1)-0.25  ax.YLim(2)+0.25])
     xlim([0 sim_time])
     grid on;
-%     xticks([0:1:sim_time]);
     ylim([ax.YLim(1)-0.05 ax.YLim(2)+0.05])
     xlabel('Time (sec)', 'FontSize', 10)
     ylabel(ylabel_name{i}, 'FontSize', 10);
-%     legend('x_d','x')
 end
 ax = nexttile;
 hold off;
@@ -175,7 +170,15 @@ xlabel('Time (sec)', 'FontSize', 10)
 ylabel(ylabel_name{8}, 'FontSize', 10);
 ylim([ax.YLim(1)-2 ax.YLim(2)+2])
 xlim([0 sim_time])
-saveas(gcf,'fig\simulaton_result1.eps','epsc');
+lgd = legend('xd', 'x');
+lgd.Layout.Tile = 9;
+lgd.FontSize = 10;
+
+if (fig_index == 1)
+    saveas(gcf,"fig\simulation_result1" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\simulation_result1" + fig_type);
+end
 
 % 3D Cartesian Pose Plot
 fig=figure(2);
@@ -200,5 +203,10 @@ xlabel('P_x(m)','FontSize', 12);
 ylabel('P_y(m)','FontSize', 12);
 zlabel('P_z(m)','FontSize', 12);
 grid on;
+lgd = legend('xd', 'x','Location','northeast');
 
-saveas(gcf,'fig\simulaton_result2.eps','epsc');
+if (fig_index == 1)
+    saveas(gcf,"fig\simulation_result2" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\simulation_result2" + fig_type);
+end

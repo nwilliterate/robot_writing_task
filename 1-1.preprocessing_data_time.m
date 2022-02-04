@@ -1,8 +1,8 @@
 % Copyright (C) 2021 All rights reserved.
-%
 % Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+%
 % Date:         Oct, 18, 2021
-% Last Updated: Des, 13, 2021
+% Last Updated: Feb, 04, 2022
 %
 % -------------------------------------------------
 % Franka Robotics
@@ -15,9 +15,6 @@ clc; clear;
 addpath(genpath('.'));
 
 fig_index = 2;
-
-task_index = 3;
-
 if (fig_index == 1)
     fig_type = ".eps";
 elseif (fig_index == 2)
@@ -26,6 +23,7 @@ elseif (fig_index == 3)
     fig_type = ".jpg";
 end
 
+task_index = 3;
 if (task_index == 1)
     task_folder = "task1";
     folder_name = "0. raw_data\task1\[20211018-";
@@ -142,6 +140,9 @@ for i=1:8
     ylabel(ylabel_name{i});
     xlabel('time(s)');
 end
+lgd = legend('demo1','demo2','demo3','demo4','demo5');
+lgd.Layout.Tile = 9;
+lgd.FontSize = 10;
 if (fig_index == 1)
     saveas(gcf,"fig\preprocessing_result1" + fig_type, 'epsc');
 else
@@ -160,8 +161,7 @@ end
 xlabel('P_x(m)');
 ylabel('P_y(m)');
 zlabel('P_z(m)');
-saveas(gcf,'fig\preprocessing_result1.eps','epsc');
-
+lgd = legend('demo1','demo2','demo3','demo4','demo5','Location','northwest');
 if (fig_index == 1)
     saveas(gcf,"fig\preprocessing_result2" + fig_type, 'epsc');
 else

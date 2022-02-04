@@ -22,8 +22,13 @@
 <img src="/fig/learning_result4.png" alt="1"  width="375" /> 
 
 ### 3. trajectory interpolation
+<img src="/fig/traj_inter_result1.png" alt="1"  width="375" /> 
+<img src="/fig/traj_inter_result2.png" alt="1"  width="375" /> 
+<img src="/fig/traj_inter_result3.png" alt="1"  width="375" /> 
 
 ### 4. simulation result 
+<img src="/fig/simulation_result1.png" alt="1"  width="375" /> 
+<img src="/fig/simulation_result2.png" alt="1"  width="375" /> 
 
 ### 5. experiment result
 

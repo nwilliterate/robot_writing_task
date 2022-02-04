@@ -2,7 +2,7 @@
 % Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
 %
 % Date:         Oct, 18, 2021
-% Last Updated: Feb, 04, 2021
+% Last Updated: Feb, 04, 2022
 %
 % -------------------------------------------------
 % Trajectory Interpolation
@@ -107,6 +107,10 @@ for i=1:8
     ylabel("x_"+num2str(i)+"");
     xlabel('time(s)');
 end
+lgd = legend('inter x');
+lgd.Layout.Tile = 9;
+lgd.FontSize = 10;
+
 if (fig_index == 1)
     saveas(gcf,"fig\traj_inter_result1" + fig_type, 'epsc');
 else
@@ -121,8 +125,8 @@ real_car_quat = table2array(readtable(folder_name+timeline{i}+"]franka_data_cart
 plot3((real_car_quat(:,1)), (real_car_quat(:,2)), (real_car_quat(:,3)),':k','LineWidth',1)
 hold on;
 end
-plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'.k','LineWidth',1.5')
-plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'.r','LineWidth',1.5')
+plot3(ref_x(:,1), ref_x(:,2),ref_x(:,3),'-k','LineWidth',1.5')
+plot3(ref_x(:,1)-ref_x(:,8)*0.001, ref_x(:,2),ref_x(:,3),'-r','LineWidth',1.5')
 grid on;
 ax = gca;
 r = 0.075;
@@ -130,6 +134,7 @@ axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2
 xlabel('x_1(m)');
 ylabel('x_2(m)');
 zlabel('x_3(m)');
+lgd = legend('demo1','demo2','demo3','demo4','demo5','inter x','inter x plus f','Location','northwest');
 if (fig_index == 1)
     saveas(gcf,"fig\traj_inter_result2" + fig_type, 'epsc');
 else
@@ -155,6 +160,7 @@ axis([ax.XLim(1)-r ax.XLim(2)+r ax.YLim(1)-r ax.YLim(2)+r ax.ZLim(1)-r ax.ZLim(2
 xlabel('x_1(m)');
 ylabel('x_2(m)');
 zlabel('x_3(m)');
+lgd = legend('demo1','demo2','demo3','demo4','demo5','inter x f','Location','northwest');
 if (fig_index == 1)
     saveas(gcf,"fig\traj_inter_result3" + fig_type, 'epsc');
 else

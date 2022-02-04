@@ -1,20 +1,20 @@
-% Copyright (C) 2021 Electronics and Telecommunications Research Institute(ETRI). All rights reserved.
-% Authors:     Seonghyeon Jo <seonghyeonjo@etri.re.kr>
+% Copyright (C) 2021 All rights reserved.
+% Authors:      Seonghyeon Jo <seonghyeonjo@etri.re.kr>
 %
-% Date:        Ang, 10, 2021
+% Date:         Oct, 18, 2021
+% Last Updated: Feb, 04, 2022
 % 
 % -------------------------------------------------
-% Compare to gail and lstm
+% Validation LSTM network
 % 
 % -------------------------------------------------
 %
-% the following code has been tested on Matlab 2020b
+% the following code has been tested on Matlab 2021a
 %%
 clc; clear;
 addpath(genpath('.'));
 
 fig_index = 2;
-
 if (fig_index == 1)
     fig_type = ".eps";
 elseif (fig_index == 2)
@@ -76,6 +76,9 @@ for i=1:8
     ylabel(ylabel_name{i}, 'FontSize', 10);
     grid on;
 end
+lgd = legend('demo1','demo2','demo3','demo4','demo5','gen1');
+lgd.Layout.Tile = 9;
+lgd.FontSize = 10;
 if (fig_index == 1)
     saveas(gcf,"fig\learning_result3" + fig_type, 'epsc');
 else
@@ -89,7 +92,7 @@ nexttile
 hold off
 plot3(table_demo(1:len,1), table_demo(1:len,2), table_demo(1:len,3),':k','LineWidth',1.5')
 hold on
- for d=1:5
+ for d=2:5
      plot3(table_demo(len*(d-1)+1:len*d,1), table_demo(len*(d-1)+1:len*d,2), table_demo(len*(d-1)+1:len*d,3),':k','LineWidth',1.5')
  end
  
@@ -101,6 +104,7 @@ xlabel('P_x(m)','FontSize', 12);
 ylabel('P_y(m)','FontSize', 12);
 zlabel('P_z(m)','FontSize', 12);
 grid on;
+lgd = legend('demo1','demo2','demo3','demo4','demo5','gen1','Location','northwest');
 if (fig_index == 1)
     saveas(gcf,"fig\learning_result4" + fig_type, 'epsc');
 else

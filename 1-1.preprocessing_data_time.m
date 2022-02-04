@@ -14,7 +14,17 @@
 clc; clear;
 addpath(genpath('.'));
 
+fig_index = 2;
+
 task_index = 3;
+
+if (fig_index == 1)
+    fig_type = ".eps";
+elseif (fig_index == 2)
+    fig_type = ".png";
+elseif (fig_index == 3)
+    fig_type = ".jpg";
+end
 
 if (task_index == 1)
     task_folder = "task1";
@@ -132,6 +142,11 @@ for i=1:8
     ylabel(ylabel_name{i});
     xlabel('time(s)');
 end
+if (fig_index == 1)
+    saveas(gcf,"fig\preprocessing_result1" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\preprocessing_result1" + fig_type);
+end
 
 figure(3)
 set(gcf,'color','w');
@@ -145,7 +160,13 @@ end
 xlabel('P_x(m)');
 ylabel('P_y(m)');
 zlabel('P_z(m)');
-saveas(gcf,'fig\teaching_result1.eps','epsc');
+saveas(gcf,'fig\preprocessing_result1.eps','epsc');
+
+if (fig_index == 1)
+    saveas(gcf,"fig\preprocessing_result2" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\preprocessing_result2" + fig_type);
+end
 
 
 % figure(4)

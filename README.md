@@ -8,10 +8,13 @@
 
 ### 0. Raw data 
 
-<img src="./fig/teaching_result1.png" alt="1"  width="375" /> 
-<img src="./fig/teaching_result2.png" alt="1"  width="375" /> 
+<img src="/fig/teaching_result1.png" alt="1"  width="375" /> 
+<img src="/fig/teaching_result2.png" alt="1"  width="375" /> 
 
 ### 1. preprocessing data
+
+<img src="/fig/preprocessing_result1.png" alt="1"  width="375" /> 
+<img src="/fig/preprocessing_result2.png" alt="1"  width="375" /> 
 
 ### 2. learning from demonstartion using LSTM network 
 

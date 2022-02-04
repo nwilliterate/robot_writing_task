@@ -33,10 +33,10 @@ elseif (task_index == 3)
 end
 
 % reference joint catersian
-ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose.csv"));
-ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force.csv"));
-% ref_x = ref_x(1:19000, :);
-% ref_f = ref_f(1:19000, :);
+% ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose.csv"));
+% ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force.csv"));
+ref_x = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_pose_20s.csv"));
+ref_f = table2array(readtable("3. trajectory_data\"+task_folder+"\trajectory_force_20s.csv"));
 
 % simulation setting
 sample_size = length(ref_x);

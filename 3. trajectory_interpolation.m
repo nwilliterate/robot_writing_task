@@ -40,6 +40,7 @@ end
 
 sim_period = 0.001;
 sample_time = 0.045;
+% sample_time = 0.051;
 
 real_x = [];
 real_f = [];

@@ -8,8 +8,8 @@
 
 ### 0. Raw data 
 
-<img src="/fig/teaching_result1.png" alt="1"  width="375" /> 
 <img src="/fig/teaching_result2.png" alt="1"  width="375" /> 
+<img src="/fig/teaching_result1.png" alt="1"  width="375" /> 
 
 ### 1. preprocessing data
 
@@ -31,6 +31,8 @@
 <img src="/fig/simulation_result2.png" alt="1"  width="375" /> 
 
 ### 5. experiment result
+<img src="/fig/experiment_result1.png" alt="1"  width="375" /> 
+<img src="/fig/experiment_result2.png" alt="1"  width="375" /> 
 
 In learning from demonstation, the output is the next state of the robot taught by the expert.
 

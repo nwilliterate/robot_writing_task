@@ -13,6 +13,8 @@
 %%
 clc; clear;
 addpath(genpath('.'));
+% fig_type = ".eps";
+fig_type = ".png";
 
 task_index = 3;
 
@@ -44,7 +46,7 @@ end
 xlabel('P_x(m)');
 ylabel('P_y(m)');
 zlabel('P_z(m)');
-saveas(gcf,'fig\teaching_result1.eps','epsc');
+saveas(gcf,"fig\teaching_result1"+fig_type,'epsc');
 
 figure(2)
 set(gcf,'color','w');
@@ -79,4 +81,4 @@ for i =1:5
     xlabel('time(s)');
 end
 
-saveas(gcf,'fig\teaching_result2.eps','epsc');
+saveas(gcf,"fig\teaching_result2" + fig_type,'epsc');

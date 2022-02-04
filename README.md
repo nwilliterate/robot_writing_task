@@ -1,10 +1,26 @@
-# robot manipulator writting task
+# robot manipulator writing task
 
 > Authors:	Seonghyeon Jo(cpsc.seonghyeon@gmail.com)
 > Date:		 Jan, 1, 2022
 
+### video
+<iframe style="width:100%; height:300px;" src="https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-##  learning from demonstration using lstm
+### 0. Raw data 
+
+<img src="./fig/teaching_result1.png" alt="1"  width="375" /> 
+<img src="./fig/teaching_result2.png" alt="1"  width="375" /> 
+
+### 1. preprocessing data
+
+### 2. learning from demonstartion using LSTM network 
+
+### 3. trajectory interpolation
+
+### 4. simulation result 
+
+### 5. experiment result
+
 In learning from demonstation, the output is the next state of the robot taught by the expert.
 
 
@@ -34,3 +50,4 @@ alt="\begin{align}
 ">
 
 ## 
+

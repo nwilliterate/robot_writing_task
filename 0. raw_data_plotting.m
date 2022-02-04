@@ -13,10 +13,15 @@
 %%
 clc; clear;
 addpath(genpath('.'));
-% fig_type = ".eps";
-fig_type = ".png";
+task_index = 3; fig_index = 2;
 
-task_index = 3;
+if (fig_index == 1)
+    fig_type = ".eps";
+elseif (fig_index == 2)
+    fig_type = ".png";
+elseif (fig_index == 3)
+    fig_type = ".jpg";
+end
 
 if (task_index == 1)
     folder_name = "0. raw_data\task1\[20211018-";
@@ -46,7 +51,11 @@ end
 xlabel('P_x(m)');
 ylabel('P_y(m)');
 zlabel('P_z(m)');
-saveas(gcf,"fig\teaching_result1"+fig_type,'epsc');
+if (fig_index == 1)
+    saveas(gcf,"fig\teaching_result1" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\teaching_result1" + fig_type);
+end
 
 figure(2)
 set(gcf,'color','w');
@@ -81,4 +90,8 @@ for i =1:5
     xlabel('time(s)');
 end
 
-saveas(gcf,"fig\teaching_result2" + fig_type,'epsc');
+if (fig_index == 1)
+    saveas(gcf,"fig\teaching_result2" + fig_type, 'epsc');
+else
+    saveas(gcf,"fig\teaching_result2" + fig_type);
+end

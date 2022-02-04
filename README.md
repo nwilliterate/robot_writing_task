@@ -4,11 +4,8 @@
 > Date:		 Jan, 1, 2022
 
 
-https://user-images.githubusercontent.com/46432171/152458731-7e0517ef-70f9-428c-801b-6dedcb74f51a.mp4
+https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1
 
-
-### video
-<iframe style="width:100%; height:300px;" src="https://www.youtube.com/embed/IUuEeZEsJNY?autoplay=1&mute=1&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ### 0. Raw data 
 <img src="/fig/teaching_result2.png" alt="1"  width="375" /> 
